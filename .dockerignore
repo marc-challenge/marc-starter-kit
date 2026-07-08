@@ -1,0 +1,10 @@
+# Excluded from the demo/agent image build context
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+tokens.env
+.env
+*.egg-info/
+build/
+dist/

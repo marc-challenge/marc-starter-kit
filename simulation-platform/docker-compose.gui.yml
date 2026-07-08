@@ -1,0 +1,20 @@
+# Copyright (c) 2026, IoT Convergence & Open Sharing System (IoTCOSS)
+#
+# MARC 2026 - GUI overlay (for checking the score panel/viewport)
+# ===========================================================================
+# Overlay this together with docker-compose.yml to attach an X11 display to the platform service.
+# (The base compose is headless. This overlay adds DISPLAY + the X11 socket.)
+#
+# Prerequisite (host, once): allow X server access
+#   xhost +local:root
+# Run:
+#   HEADLESS=false docker compose \
+#     -f docker-compose.yml -f docker-compose.gui.yml --profile platform up
+# (To view dataset-gen via GUI too, use the same pattern + --profile dataset-gen)
+# ===========================================================================
+services:
+  platform:
+    environment:
+      DISPLAY: "${DISPLAY:-:0}"        # host X display (usually :0 or :1)
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw

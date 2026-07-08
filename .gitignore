@@ -1,0 +1,13 @@
+# Delivered inside the content image, not tracked in git.
+# simulation_app/ (platform source) and scenarios/ ship inside the content image; the platform and
+# `marc.sh select` read them from there, so they are intentionally absent from this repository.
+/simulation_app/
+/scenarios/
+/resources/
+/results/
+/trainer_output/
+/.runtime-data/
+simulation-platform/.env
+**/__pycache__/
+*.pyc
+.pytest_cache/

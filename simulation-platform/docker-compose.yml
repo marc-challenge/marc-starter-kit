@@ -1,0 +1,150 @@
+# Copyright (c) 2026, IoT Convergence & Open Sharing System (IoTCOSS)
+#
+# MARC 2026 - participant tools run (profiles: platform / dataset-gen / manip-trainer)
+# ===========================================================================
+# All three tools share ONE unified image (marc-platform:practice); the profile picks which entry runs.
+# This is a Dockerfile-only distribution, so images are not pulled - they are built locally from context.
+# Build context = starter-kit repo root (this compose lives under simulation-platform/, hence context: ..).
+#
+# Run (from repo root or anywhere via -f):
+#   docker compose -f simulation-platform/docker-compose.yml --profile platform     up --build   # simulation platform
+#   docker compose -f simulation-platform/docker-compose.yml --profile dataset-gen  up --build   # dataset generator
+#   docker compose -f simulation-platform/docker-compose.yml --profile manip-trainer up --build  # manipulation trainer
+#   docker compose -f simulation-platform/docker-compose.yml --profile platform down             # stop
+# Convenience wrapper: bash simulation-platform/marc.sh platform | dataset-gen | manip-trainer | down
+#
+# Change scenario/headless: .env (copy .env.example) or prefix env
+#   ENV_MARC_SCENARIO=marc2026_chungmu HEADLESS=false docker compose ... up
+#   Public practice scenarios: marc2026_chungmu (full self-scoring set) | marc2026_demo (baseline walkthrough).
+# Pick which problems are posed: edit ./problems.yaml (or `marc.sh select <scenario>`). It is used
+#   automatically when present (no env var needed); delete it to pose all problems.
+# ===========================================================================
+
+x-marc-common: &marc-common
+  runtime: nvidia
+  network_mode: "host"                 # single-participant setup (sequential scoring)
+  environment: &marc-env
+    ACCEPT_EULA: "Y"                   # NVIDIA EULA acceptance (participant is the licensee)
+    PRIVACY_CONSENT: "Y"
+    ENV_MARC_SCENARIO: "${ENV_MARC_SCENARIO:-marc2026_demo}"
+    HEADLESS: "${HEADLESS:-false}"
+    # GUI (HEADLESS=false): forward the host X display. Also uncomment the X11 volumes below
+    # and run `xhost +local:root` on the host. Harmless when HEADLESS=true.
+    DISPLAY: "${DISPLAY:-:0}"
+    XAUTHORITY: "/root/.Xauthority"
+    ISAAC_SIM_PATH: "/isaac-sim"
+    RMW_IMPLEMENTATION: "rmw_fastrtps_cpp"
+    AMENT_PREFIX_PATH: "/isaac-sim/exts/isaacsim.ros2.bridge/humble"
+    LD_LIBRARY_PATH: "/isaac-sim/exts/isaacsim.ros2.bridge/humble/lib:${LD_LIBRARY_PATH:-}"
+    PYTHONPATH: "/isaac-sim/exts/isaacsim.ros2.bridge/humble/rclpy:/metacom2026/simulation_app/marc2026"
+    USD_PLUGIN_PATH: "/isaac-sim/exts/isaacsim.robot.schema/plugins"
+    ROS_DISTRO: "humble"
+    FASTRTPS_DEFAULT_PROFILES_FILE: "/metacom2026/simulation_app/config/fastdds.xml"  # UDP-only (avoids SHM)
+    ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-0}"
+    NVIDIA_VISIBLE_DEVICES: "all"
+    NVIDIA_DRIVER_CAPABILITIES: "all"
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
+
+services:
+  platform:                            # <- marc.sh platform / make platform
+    <<: *marc-common
+    profiles: ["platform"]
+    build:
+      context: ..                      # starter-kit repo root = build context
+      dockerfile: simulation-platform/Dockerfile.practice
+      args:
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026}"
+    image: marc-platform:practice      # local build output (do not redistribute)
+    environment:
+      <<: *marc-env
+      # Auto-start without admin (participant: check via GUI score panel/viewport). all|first|"<id>,<id>"
+      MARC_AUTO_START: "${MARC_AUTO_START:-1}"
+      MARC_AUTO_STAGE1: "${MARC_AUTO_STAGE1:-all}"
+      MARC_AUTO_STAGE2: "${MARC_AUTO_STAGE2:-auto}"
+      # Problem selection is automatic: the mounted problems.yaml is used when present (pose only
+      # its enabled items). No env var needed. MARC_AUTO_STAGE1/STAGE2 above apply only when the
+      # file is absent/invalid. Optional: MARC_PROBLEM_SELECTION overrides the file path.
+      MARC_PROBLEM_SELECTION: "${MARC_PROBLEM_SELECTION:-}"
+      # Diagnostics: arm cmd-vs-actual joint angles + EE/target distance (ARMCAL/TUMCAL logs).
+      MARC_ARM_DEBUG: "${MARC_ARM_DEBUG:-0}"
+    # The participant image has no separate web console, and network_mode: host exposes any port
+    # directly, so no ports: mapping is needed.
+    volumes:
+      - ../results:/metacom2026/results:rw
+      # Problem-selection file (assembled from problems.yaml.example). Edit on the host; read-only in the container.
+      - ../problems.yaml:/metacom2026/problems.yaml:ro
+      - ../.runtime-data/cache/kit:/isaac-sim/kit/cache:rw
+      - ../.runtime-data/cache/ov:/root/.cache/ov:rw
+      - ../.runtime-data/cache/pip:/root/.cache/pip:rw
+      - ../.runtime-data/cache/glcache:/root/.cache/nvidia/GLCache:rw
+      - ../.runtime-data/cache/computecache:/root/.nv/ComputeCache:rw
+      - ../.runtime-data/logs:/root/.nvidia-omniverse/logs:rw
+      - ../.runtime-data/data:/root/.local/share/ov/data:rw
+      # To check the score panel/viewport via GUI (HEADLESS=false), uncomment + run `xhost +local:root` on the host
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-/root/.Xauthority}:/root/.Xauthority:rw
+
+  dataset-gen:                         # <- marc.sh dataset-gen  (perception labels; entry = trainer.py)
+    <<: *marc-common
+    profiles: ["dataset-gen"]
+    build:
+      context: ..
+      # Same unified image as the platform.
+      dockerfile: simulation-platform/Dockerfile.practice
+      args:
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026}"
+    image: marc-platform:practice
+    command: ["/metacom2026/simulation_app/marc2026/trainer.py"]   # dataset generator entry
+    volumes:
+      - ../trainer_output:/metacom2026/trainer_output:rw
+      - ../.runtime-data/cache/kit:/isaac-sim/kit/cache:rw
+      - ../.runtime-data/cache/ov:/root/.cache/ov:rw
+      - ../.runtime-data/cache/pip:/root/.cache/pip:rw
+      - ../.runtime-data/cache/glcache:/root/.cache/nvidia/GLCache:rw
+      - ../.runtime-data/cache/computecache:/root/.nv/ComputeCache:rw
+      - ../.runtime-data/logs:/root/.nvidia-omniverse/logs:rw
+      - ../.runtime-data/data:/root/.local/share/ov/data:rw
+
+  # Manipulation trainer - same unified image, only the entry differs via command.
+  #   A practice tool, so it is not part of the competition scoring runtime.
+  manip-trainer:                       # <- marc.sh manip-trainer  (entry = manipulation_trainer.py)
+    <<: *marc-common
+    profiles: ["manip-trainer"]
+    build:
+      context: ..
+      dockerfile: simulation-platform/Dockerfile.practice
+      args:
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026}"
+    image: marc-platform:practice
+    command: ["/metacom2026/simulation_app/marc2026/manipulation_trainer.py"]
+    volumes:
+      - ../trainer_output:/metacom2026/trainer_output:rw
+      - ../.runtime-data/cache/kit:/isaac-sim/kit/cache:rw
+      - ../.runtime-data/cache/ov:/root/.cache/ov:rw
+      - ../.runtime-data/cache/pip:/root/.cache/pip:rw
+      - ../.runtime-data/cache/glcache:/root/.cache/nvidia/GLCache:rw
+      - ../.runtime-data/cache/computecache:/root/.nv/ComputeCache:rw
+      - ../.runtime-data/logs:/root/.nvidia-omniverse/logs:rw
+      - ../.runtime-data/data:/root/.local/share/ov/data:rw
+      # GUI (HEADLESS=false): view the trainer viewport for pnp_tune. Run `xhost +local:root` on the host.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-/root/.Xauthority}:/root/.Xauthority:rw
+
+  select:                              # <- marc.sh select  (problem-selection TUI, in-container)
+    # Reuses the platform image and reads the scenario from inside it (/metacom2026/scenarios), so no
+    # scenario file is exposed in this repository. Writes the picked problems to the host ./problems.yaml.
+    profiles: ["select"]
+    image: marc-platform:practice
+    stdin_open: true                   # interactive TTY for the curses checklist
+    tty: true
+    environment:
+      MARC_SCENARIOS_DIR: /metacom2026/scenarios
+    entrypoint: ["python3", "/metacom2026/simulation_app/marc2026/tools/select_problems.py"]
+    volumes:
+      - ../problems.yaml:/metacom2026/problems.yaml:rw   # TUI saves the selection here (host copy)

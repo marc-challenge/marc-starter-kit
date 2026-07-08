@@ -1,0 +1,18 @@
+{
+  "grasp_fwd": 0.4,
+  "grasp_lat": 0.0,
+  "grasp_down": -0.28,
+  "pre_up": 0.12,
+  "carry_up": 0.24,
+  "place_fwd": -0.28,
+  "place_lat": 0.0,
+  "place_up": 0.1,
+  "grip_close": 0.58,
+  "move_speed": 0.8,
+  "carry_speed": 0.4,
+  "grip_dwell": 1.0,
+  "grasp_yaw": 0.52,
+  "tum_fwd": 0.4,
+  "tum_lat": 0.0,
+  "tum_down": -0.29
+}

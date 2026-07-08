@@ -1,0 +1,96 @@
+# MARC 2026 - Problem selection template (practice platform)
+# ---------------------------------------------------------------------------
+# Choose which challenge problems the practice platform poses. Only entries with
+# enabled: true are used; Stage 2 (retrieval) uses the first enabled entry.
+#
+# This file is used AUTOMATICALLY when present (no env var needed). Delete it to
+# pose ALL problems instead. (All stage1 enabled below = the default "all".)
+#
+# Regenerate interactively for a scenario with the checklist TUI:
+#   bash simulation-platform/marc.sh select marc2026_chungmu   # or marc2026_demo
+#
+# NOTE: the ids below match marc2026_chungmu. Selection is per-scenario — if you
+# switch scenarios, regenerate. A file whose `scenario` differs from the one you
+# run is ignored with a warning (falls back to all problems).
+# ---------------------------------------------------------------------------
+scenario: marc2026_chungmu
+stage1:
+- id: lf01_mug_table
+  enabled: true
+- id: lf02_tumbler_bench
+  enabled: true
+- id: lf03_tumbler_hydrant
+  enabled: true
+- id: lf04_sunblock_table
+  enabled: true
+- id: lf05_umbrella_vending
+  enabled: true
+- id: lf06_umbrella_fallenbike
+  enabled: true
+- id: lf07_pencilcase_table
+  enabled: true
+- id: lf08_umbrella_parking
+  enabled: true
+- id: lf09_tumbler_parking
+  enabled: true
+- id: lf10_tumbler_taxi
+  enabled: true
+- id: lf11_umbrella_taxi
+  enabled: true
+- id: hf01_vending_umbrella
+  enabled: true
+- id: hf02_table_pencilcase
+  enabled: true
+- id: hf03_table_mug
+  enabled: true
+- id: hf04_park_sunblock
+  enabled: true
+- id: hf05_bikerack_umbrella
+  enabled: true
+- id: hf06_fallenbike_umbrella
+  enabled: true
+- id: hf07_parking_tumbler
+  enabled: true
+- id: hf08_parking_umbrella
+  enabled: true
+- id: sar01_trash_sit
+  enabled: true
+- id: sar02_vending_sit
+  enabled: true
+- id: sar03_bench_lie
+  enabled: true
+- id: sar04_table_lie
+  enabled: true
+- id: sar06_parking_collapsed
+  enabled: true
+- id: sar07_parking_prone
+  enabled: true
+- id: sar08_fallenbike_down
+  enabled: true
+- id: sar09_park_bending
+  enabled: true
+- id: sarH1_park_needhelp
+  enabled: true
+- id: sarH2_parking_bikeacc
+  enabled: true
+- id: sarH3_climbed_machine
+  enabled: true
+- id: sarH4_parking_trashsit
+  enabled: true
+- id: sarH5_taxi_benchlie
+  enabled: true
+- id: sarH6_most_critical
+  enabled: true
+stage2:
+- id: rt01_parking_tumbler
+  enabled: true
+- id: rt02_parking_umbrella
+  enabled: false
+- id: rt03_vending_umbrella
+  enabled: false
+- id: rt04_taxi_tumbler
+  enabled: false
+- id: rt04b_taxi_umbrella
+  enabled: false
+- id: rtC2_fallenbike_pencil
+  enabled: false

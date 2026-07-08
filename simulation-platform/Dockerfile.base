@@ -1,0 +1,47 @@
+# Copyright (c) 2026, IoT Convergence & Open Sharing System (IoTCOSS)
+#
+# MARC 2026 - Dockerfile.base : IsaacSim + ROS2 Humble + common dependencies
+# ---------------------------------------------------------------------------
+# Dockerfile-only distribution (IsaacSim license): prebuilt images are not redistributed.
+# Participants pull the base image from nvcr.io under their own account (EULA acceptance =
+# they are the licensee), then build locally.
+#
+# Build context = starter-kit repo root.  Result image: marc-base:ros2-isaacsim-5.1
+#   docker build -f simulation-platform/Dockerfile.base -t marc-base:ros2-isaacsim-5.1 .
+# ---------------------------------------------------------------------------
+ARG DEBIAN_FRONTEND=noninteractive
+ARG ISAACSIM_VERSION=5.1.0
+
+FROM nvcr.io/nvidia/isaac-sim:${ISAACSIM_VERSION}
+
+# The IsaacSim 5.1 base runs as a non-root user; switch to root for apt installs.
+USER root
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Seoul
+
+# Required dependency packages
+RUN apt-get update && apt-get install -y \
+        curl gnupg2 lsb-release python3-pip python3-dev python3-yaml \
+    && rm -rf /var/lib/apt/lists/*
+# python3-yaml: system python3 (has curses) also needs yaml for the in-container `marc.sh select` TUI.
+
+# NOTE: the system python3 in the IsaacSim 5.1 base is PEP 668 (externally-managed),
+# so a system `pip install` is blocked. The runtime uses IsaacSim's bundled python.sh,
+# so a system pip upgrade is unnecessary and is skipped.
+
+# Locale setup only. System ROS2 is not installed:
+#   - The runtime uses IsaacSim's bundled humble bridge (`/isaac-sim/exts/isaacsim.ros2.bridge/humble`).
+#   - The isaac-sim:5.1.0 base is Ubuntu 24.04 (noble), so ros-humble (jammy-only) cannot be installed.
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y locales && \
+    locale-gen en_US en_US.UTF-8 && \
+    update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG=en_US.UTF-8
+
+# Admin Web Service dependencies - IsaacSim bundled Python (3.11)
+RUN /isaac-sim/python.sh -m pip install --no-cache-dir fastapi 'uvicorn[standard]'
+
+WORKDIR /isaac-sim

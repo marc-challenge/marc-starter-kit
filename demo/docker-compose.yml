@@ -1,0 +1,48 @@
+# Copyright (c) 2026, IoT Convergence & Open Sharing System (IoTCOSS)
+#
+# MARC 2026 - Run the participant demo application (standard entry point)
+# ===========================================================================
+# Standard run:  docker compose up
+#
+# Separate machines: the participant application runs on **separate, dedicated hardware**
+#   from the runtime platform. The two machines share the same LAN and the same
+#   ROS_DOMAIN_ID, and DDS communication goes over the network (UDP)
+#   (not same-host shared memory).
+#   Qualifier scoring hardware baseline: Ubuntu 22.04 / i7-12700K / 125GiB / RTX PRO 5000 (48GB).
+#   Scoring is sequential (one team at a time), so a single ROS_DOMAIN_ID is enough.
+#
+# Precondition: the runtime must already be up on the platform machine.
+# Values participants must fill in: enter your assigned team ID/token in MARC_TEAM_ID / MARC_TOKEN.
+#   (This repo is Private and is submitted by adding the organizer account as a
+#    collaborator, so the token lives in the compose file. Do not put it in a public repo.)
+# ===========================================================================
+services:
+  agent:
+    build:
+      context: ..                 # starter kit root (includes marc_sdk + demo)
+      dockerfile: demo/Dockerfile
+    image: marc-agent:local       # local build artifact (do not redistribute)
+    network_mode: host            # DDS discovery over the LAN via the participant machine NIC
+    environment:
+      # Two ways to set your credentials (both work):
+      #   1) export MARC_TEAM_ID=... MARC_TOKEN=... before `docker compose up` (host env passes through), or
+      #   2) hardcode them by editing the defaults after ':-' below.
+      # For the private-repo submission use (2) so the organizer just runs `docker compose up`.
+      # The team ID and token are issued by the organizers (not defaulted or derived locally).
+      MARC_TEAM_ID:  "${MARC_TEAM_ID:-u1}"                     # <- your assigned team ID
+      MARC_TOKEN:    "${MARC_TOKEN:-PASTE_YOUR_TOKEN_HERE}"    # <- your assigned token
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-0}"                     # same value as the platform machine
+      RMW_IMPLEMENTATION: "rmw_fastrtps_cpp"
+    # GPU for VLA inference (uses the participant machine's GPU). If no GPU is needed, the deploy block can be removed.
+    # Requires: nvidia-container-toolkit installed on the participant machine.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # (Optional) To use a scenario file for obstacle injection, mount it and set MARC_SCENARIO_FILE:
+    #   add  MARC_SCENARIO_FILE: "/agent/my_scenario.yaml"  to environment
+    # volumes:
+    #   - ./my_scenario.yaml:/agent/my_scenario.yaml:ro

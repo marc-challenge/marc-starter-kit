@@ -1,0 +1,883 @@
+_generated_from: marc2026_demo.yaml
+_note: Demo-only data extracted from a scenario yaml (GT + random wrong axes, seed
+  below). Real participants do not have the scenario; the demo mock agents read
+  this instead.
+_seed: 2026
+obstacles:
+- x: -38.60969
+  y: 130.67141
+  radius: 2.0
+- x: -40.16271
+  y: 132.34205
+  radius: 2.0
+- x: -33.91696
+  y: 131.129
+  radius: 0.6
+- x: -48.56376
+  y: 128.79317
+  radius: 0.6
+- x: -38.18341
+  y: 134.45073
+  radius: 0.4
+- x: -33.8053
+  y: 130.52874
+  radius: 0.4
+- x: -40.98046
+  y: 116.73601
+  radius: 2.0
+- x: -48.6493
+  y: 123.32689
+  radius: 2.0
+- x: -38.00986
+  y: 129.28087
+  radius: 0.25
+- x: -36.0778
+  y: 128.70259
+  radius: 0.25
+- x: -44.37614
+  y: 121.12427
+  radius: 0.25
+- x: -35.31731
+  y: 129.45959
+  radius: 0.5
+- x: -35.90187
+  y: 128.77072
+  radius: 0.25
+- x: -37.24424
+  y: 134.7235
+  radius: 0.25
+- x: -39.20571
+  y: 118.69628
+  radius: 0.5
+- x: -49.27203
+  y: 125.6504
+  radius: 0.5
+- x: -36.97192
+  y: 135.06796
+  radius: 0.25
+- x: -37.05773
+  y: 134.78233
+  radius: 0.25
+- x: -37.49937
+  y: 134.29256
+  radius: 0.25
+- x: -37.93124
+  y: 134.61274
+  radius: 0.5
+- x: -42.89928
+  y: 120.22615
+  radius: 0.25
+- x: -76.86797
+  y: 120.40862
+  radius: 0.6
+- x: -69.30859
+  y: 128.94792
+  radius: 0.6
+- x: -71.4853
+  y: 123.55602
+  radius: 0.6
+- x: -67.2993
+  y: 127.51562
+  radius: 2.0
+- x: -73.14668
+  y: 124.85879
+  radius: 0.4
+- x: -71.54459
+  y: 132.08591
+  radius: 0.5
+- x: -74.63315
+  y: 123.01358
+  radius: 0.5
+- x: -71.18778
+  y: 123.96041
+  radius: 0.5
+- x: -73.61444
+  y: 125.12314
+  radius: 0.5
+- x: -74.61472
+  y: 125.97629
+  radius: 0.25
+- x: -74.12248
+  y: 126.14031
+  radius: 0.25
+- x: -74.14276
+  y: 125.94308
+  radius: 0.25
+- x: -74.29723
+  y: 126.62895
+  radius: 0.25
+- x: -74.4896
+  y: 125.5478
+  radius: 0.25
+- x: -74.87173
+  y: 125.97105
+  radius: 0.25
+- x: -74.70963
+  y: 126.65607
+  radius: 0.25
+- x: -73.90099
+  y: 126.32584
+  radius: 0.25
+- x: -75.28919
+  y: 125.82285
+  radius: 0.25
+- x: -75.04851
+  y: 126.80743
+  radius: 0.25
+- x: -73.16084
+  y: 127.24185
+  radius: 0.25
+- x: -75.26939
+  y: 126.03109
+  radius: 0.25
+- x: -70.36831
+  y: 128.36208
+  radius: 0.25
+- x: -77.71742
+  y: 120.52681
+  radius: 0.5
+- x: -50.73163
+  y: 141.54204
+  radius: 2.0
+- x: -67.38833
+  y: 135.92868
+  radius: 0.6
+- x: -67.01522
+  y: 135.76528
+  radius: 0.6
+- x: -66.53778
+  y: 135.03718
+  radius: 0.6
+- x: -67.68694
+  y: 136.14495
+  radius: 0.6
+- x: -62.80626
+  y: 135.53058
+  radius: 1.0
+- x: -63.80366
+  y: 134.61723
+  radius: 0.4
+- x: -61.13428
+  y: 137.55521
+  radius: 0.5
+- x: -62.77176
+  y: 135.78356
+  radius: 0.5
+- x: -61.04501
+  y: 136.08813
+  radius: 0.25
+- x: -52.42612
+  y: 113.37388
+  radius: 0.6
+- x: -58.92264
+  y: 119.89141
+  radius: 1.0
+- x: -56.91348
+  y: 108.72769
+  radius: 0.6
+- x: -52.13792
+  y: 111.08881
+  radius: 0.6
+- x: -53.99992
+  y: 111.80938
+  radius: 0.4
+- x: -65.11757
+  y: 107.5266
+  radius: 0.6
+- x: -69.50056
+  y: 111.90305
+  radius: 0.6
+- x: -58.62067
+  y: 119.96513
+  radius: 0.25
+- x: -55.25415
+  y: 111.25921
+  radius: 0.25
+- x: -55.04442
+  y: 112.39562
+  radius: 0.25
+- x: -59.291
+  y: 119.04156
+  radius: 0.25
+- x: -58.86855
+  y: 120.04492
+  radius: 0.25
+- x: -55.52882
+  y: 111.76691
+  radius: 0.25
+- x: -55.33482
+  y: 112.18094
+  radius: 0.25
+- x: -52.53309
+  y: 113.348
+  radius: 0.25
+- x: -57.39322
+  y: 108.60841
+  radius: 0.25
+- x: -57.85455
+  y: 120.84178
+  radius: 0.25
+- x: -52.94741
+  y: 113.04589
+  radius: 0.5
+- x: -62.45212
+  y: 116.18793
+  radius: 0.5
+- x: -55.23807
+  y: 111.34714
+  radius: 0.5
+- x: -58.25736
+  y: 118.58498
+  radius: 0.5
+- x: -59.79118
+  y: 119.70697
+  radius: 0.5
+- x: -76.58481
+  y: 96.19682
+  radius: 0.4
+- x: -78.86305
+  y: 101.85303
+  radius: 0.6
+- x: -80.72785
+  y: 97.24997
+  radius: 1.0
+- x: -76.88852
+  y: 102.46404
+  radius: 0.5
+- x: -80.93486
+  y: 96.48996
+  radius: 0.5
+- x: -77.25906
+  y: 97.1154
+  radius: 0.25
+- x: -77.6659
+  y: 96.58376
+  radius: 0.25
+- x: -78.95927
+  y: 100.68586
+  radius: 0.25
+- x: -78.87412
+  y: 97.05807
+  radius: 0.25
+- x: -77.9758
+  y: 96.78447
+  radius: 0.25
+- x: -85.24607
+  y: 109.03265
+  radius: 0.6
+- x: -84.97715
+  y: 109.3379
+  radius: 0.6
+- x: -86.20287
+  y: 110.58636
+  radius: 0.4
+- x: -83.61583
+  y: 103.44018
+  radius: 2.0
+- x: -84.10907
+  y: 112.51235
+  radius: 0.6
+- x: -78.99035
+  y: 105.80761
+  radius: 0.5
+- x: -84.92714
+  y: 111.8766
+  radius: 0.5
+- x: -85.89221
+  y: 108.42257
+  radius: 0.25
+- x: -85.60261
+  y: 108.66516
+  radius: 0.25
+delivery_coord:
+- -37.10227
+- 124.1244
+- 16.80796
+stage1_answers:
+  Find the mug on the picnic table.:
+    camera_id: rig_1_a
+    interpretation:
+      target_type: mug
+      landmark: picnic_table
+      relation: 'on'
+    grounding:
+      anchor_coord:
+      - -58.92264
+      - 119.89141
+      - 16.35574
+      target_coord:
+      - -58.62067
+      - 119.96513
+      - 17.44791
+  Find the tumbler on the bench.:
+    camera_id: rig_1_a
+    interpretation:
+      target_type: tumbler
+      landmark: bench
+      relation: 'on'
+    grounding:
+      anchor_coord:
+      - -40.42612
+      - 125.37388
+      - 16.6
+      target_coord:
+      - -52.53309
+      - 113.348
+      - 16.9666
+  Find the tumbler near the fire hydrant in the parking lot.:
+    camera_id: rig_2_b
+    interpretation:
+      target_type: tumbler
+      landmark: hydrant
+      relation: near
+    grounding:
+      anchor_coord:
+      - -33.8053
+      - 130.52874
+      - 16.85787
+      target_coord:
+      - -24.0778
+      - 140.70259
+      - 16.84848
+  Find the sunblock beside the picnic table.:
+    camera_id: rig_1_a
+    interpretation:
+      target_type: sunblock
+      landmark: picnic_table
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -58.92264
+      - 119.89141
+      - 16.35574
+      target_coord:
+      - -57.85455
+      - 120.84178
+      - 16.40427
+  Find the umbrella beside the vending machine.:
+    camera_id: rig_2_c
+    interpretation:
+      target_type: umbrella
+      landmark: vending_machine
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -50.80626
+      - 147.53058
+      - 16.2
+      target_coord:
+      - -49.04501
+      - 148.08813
+      - 16.27506
+  Find the umbrella next to the trash can.:
+    camera_id: rig_3_b
+    interpretation:
+      target_type: umbrella
+      landmark: trash_can
+      relation: near
+    grounding:
+      anchor_coord:
+      - -74.20287
+      - 122.58636
+      - 15.34397
+      target_coord:
+      - -77.6659
+      - 96.58376
+      - 15.80732
+  Find the pencil case near the picnic table.:
+    camera_id: rig_3_b
+    interpretation:
+      target_type: pencilcase
+      landmark: picnic_table
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -80.72785
+      - 97.24997
+      - 15.65287
+      target_coord:
+      - -65.25906
+      - 109.1154
+      - 15.86412
+  Find the umbrella dropped in the empty parking space.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: cola_can
+      landmark: police_car
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -40.98046
+      - 116.73601
+      - 16.69391
+      target_coord:
+      - -42.89928
+      - 120.22615
+      - 16.7077
+  Find the tumbler dropped in the empty parking space.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: tumbler
+      landmark: police_car
+      relation: near
+    grounding:
+      anchor_coord:
+      - -40.98046
+      - 116.73601
+      - 16.69391
+      target_coord:
+      - -44.37614
+      - 121.12427
+      - 16.6799
+  Find the tumbler on the road next to the taxi.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: tumbler
+      landmark: taxi
+      relation: near
+    grounding:
+      anchor_coord:
+      - -83.61583
+      - 103.44018
+      - 15.45533
+      target_coord:
+      - -73.89221
+      - 120.42257
+      - 15.52783
+  Find the umbrella on the road next to the taxi.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: umbrella
+      landmark: taxi
+      relation: near
+    grounding:
+      anchor_coord:
+      - -83.61583
+      - 103.44018
+      - 15.45533
+      target_coord:
+      - -85.60261
+      - 108.66516
+      - 15.53515
+  After working out I grabbed a drink from the machine and left my umbrella standing next to it.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: umbrella
+      landmark: vending_machine
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -62.80626
+      - 135.53058
+      - 16.2
+      target_coord:
+      - -61.04501
+      - 136.08813
+      - 16.27506
+  I was taking notes at an outdoor table and left my pencil case behind.:
+    camera_id: rig_3_b
+    interpretation:
+      target_type: pencilcase
+      landmark: bench
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -80.72785
+      - 97.24997
+      - 15.65287
+      target_coord:
+      - -77.25906
+      - 97.1154
+      - 15.86412
+  I was reading with a coffee at an outdoor table and left my mug there.:
+    camera_id: rig_1_a
+    interpretation:
+      target_type: mug
+      landmark: picnic_table
+      relation: 'on'
+    grounding:
+      anchor_coord:
+      - -58.92264
+      - 119.89141
+      - 16.35574
+      target_coord:
+      - -58.62067
+      - 119.96513
+      - 17.44791
+  I was resting in the sun at the park and left the sunblock I had been using.:
+    camera_id: rig_1_a
+    interpretation:
+      target_type: sunblock
+      landmark: bench
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -58.92264
+      - 119.89141
+      - 16.35574
+      target_coord:
+      - -57.85455
+      - 120.84178
+      - 16.40427
+  After grabbing a drink from the vending machine I left my umbrella propped against its side.:
+    camera_id: rig_2_c
+    interpretation:
+      target_type: umbrella
+      landmark: bench
+      relation: beside
+    grounding:
+      anchor_coord:
+      - -62.80626
+      - 135.53058
+      - 16.2
+      target_coord:
+      - -61.04501
+      - 136.08813
+      - 16.27506
+  I stopped to throw something in the bin and left my umbrella leaning against the trash can.:
+    camera_id: rig_3_b
+    interpretation:
+      target_type: umbrella
+      landmark: trash_can
+      relation: near
+    grounding:
+      anchor_coord:
+      - -86.20287
+      - 110.58636
+      - 15.34397
+      target_coord:
+      - -65.6659
+      - 108.58376
+      - 15.80732
+  I think I dropped my tumbler on the ground as I got out of my car in the parking lot.:
+    camera_id: rig_2_b
+    interpretation:
+      target_type: tumbler
+      landmark: police_car
+      relation: near
+    grounding:
+      anchor_coord:
+      - -40.98046
+      - 116.73601
+      - 16.69391
+      target_coord:
+      - -32.37614
+      - 133.12427
+      - 16.6799
+  Getting out of my car I dropped my umbrella in the empty space next to it; find it in the parking lot.:
+    camera_id: rig_2_b
+    interpretation:
+      target_type: umbrella
+      landmark: bench
+      relation: near
+    grounding:
+      anchor_coord:
+      - -40.98046
+      - 116.73601
+      - 16.69391
+      target_coord:
+      - -42.89928
+      - 120.22615
+      - 16.7077
+  Find the person sitting on top of the trash can in the parking lot.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: person
+      landmark: trash_can
+      situation: accident
+    grounding:
+      anchor_coord:
+      - -74.20287
+      - 122.58636
+      - 15.34397
+      target_coord:
+      - -37.93124
+      - 134.61274
+      - 17.05
+  Find the person sitting on top of the vending machine.:
+    camera_id: rig_2_c
+    interpretation:
+      target_type: person
+      landmark: vending_machine
+      situation: emergency
+    grounding:
+      anchor_coord:
+      - -62.80626
+      - 135.53058
+      - 16.2
+      target_coord:
+      - -62.77176
+      - 135.78356
+      - 17.93731
+  Find the person lying face-down on the bench near the taxi.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: person
+      landmark: bench
+      situation: abnormal
+    grounding:
+      anchor_coord:
+      - -72.10907
+      - 124.51235
+      - 15.47582
+      target_coord:
+      - -84.92714
+      - 111.8766
+      - 15.9972
+  Find the person lying on top of the picnic table.:
+    camera_id: rig_3_b
+    interpretation:
+      target_type: person
+      landmark: picnic_table
+      situation: normal
+    grounding:
+      anchor_coord:
+      - -68.72785
+      - 109.24997
+      - 15.65287
+      target_coord:
+      - -80.93486
+      - 96.48996
+      - 16.82847
+  Find the person collapsed on the parking lot floor.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: person
+      landmark: hydrant
+      situation: emergency
+    grounding:
+      anchor_coord:
+      - -33.8053
+      - 130.52874
+      - 16.85787
+      target_coord:
+      - -23.31731
+      - 141.45959
+      - 16.82526
+  Find the person lying face-down and motionless in the parking lot.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: person
+      landmark: bicycle
+      situation: accident
+    grounding:
+      anchor_coord:
+      - -78.86305
+      - 101.85303
+      - 16.11596
+      target_coord:
+      - -49.27203
+      - 125.6504
+      - 16.73964
+  Find the person fallen on the ground next to the toppled bicycle.:
+    camera_id: rig_3_b
+    interpretation:
+      target_type: person
+      landmark: bicycle
+      situation: emergency
+    grounding:
+      anchor_coord:
+      - -78.86305
+      - 101.85303
+      - 16.11596
+      target_coord:
+      - -64.88852
+      - 114.46404
+      - 16.05381
+  Find the person bent over and motionless near the trash can in the park rest area.:
+    camera_id: rig_1_a
+    interpretation:
+      target_type: person
+      landmark: trash_can
+      situation: emergency
+    grounding:
+      anchor_coord:
+      - -86.20287
+      - 110.58636
+      - 15.34397
+      target_coord:
+      - -55.23807
+      - 111.34714
+      - 16.77229
+  ? People are relaxing at the park and one is even lying on the grass; find the one
+    near the trash can who is bent over and not moving and actually needs help.
+  : camera_id: rig_1_a
+    interpretation:
+      target_type: person
+      landmark: trash_can
+      situation: emergency
+    grounding:
+      anchor_coord:
+      - -86.20287
+      - 110.58636
+      - 15.34397
+      target_coord:
+      - -43.23807
+      - 123.34714
+      - 16.77229
+  In the parking lot a person is down next to a bicycle and looks like they had an accident; find them.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: person
+      landmark: bicycle
+      situation: accident
+    grounding:
+      anchor_coord:
+      - -66.86305
+      - 113.85303
+      - 16.11596
+      target_coord:
+      - -49.27203
+      - 125.6504
+      - 16.73964
+  Someone is up where people should not be; find the person who climbed on top of the drink machine.:
+    camera_id: rig_2_c
+    interpretation:
+      target_type: person
+      landmark: vending_machine
+      situation: abnormal
+    grounding:
+      anchor_coord:
+      - -62.80626
+      - 135.53058
+      - 16.2
+      target_coord:
+      - -50.77176
+      - 147.78356
+      - 17.93731
+  In the parking lot, find the person who climbed up and is sitting on top of the trash can.:
+    camera_id: rig_2_b
+    interpretation:
+      target_type: person
+      landmark: trash_can
+      situation: abnormal
+    grounding:
+      anchor_coord:
+      - -74.20287
+      - 122.58636
+      - 15.34397
+      target_coord:
+      - -37.93124
+      - 134.61274
+      - 17.05
+  Near the taxi, find the person lying down on top of the bench.:
+    camera_id: rig_3_c
+    interpretation:
+      target_type: person
+      landmark: bench
+      situation: abnormal
+    grounding:
+      anchor_coord:
+      - -84.10907
+      - 112.51235
+      - 15.47582
+      target_coord:
+      - -84.92714
+      - 111.8766
+      - 15.9972
+  Several people are in the parking lot; one is completely face-down and immobile; find the most critical one.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: person
+      landmark: bicycle
+      situation: accident
+    grounding:
+      anchor_coord:
+      - -78.86305
+      - 101.85303
+      - 16.11596
+      target_coord:
+      - -49.27203
+      - 125.6504
+      - 16.73964
+stage2_answers:
+  Pick up the tumbler dropped on the parking lot floor and bring it to the owner.:
+    camera_id: rig_7_a
+    interpretation:
+      target_type: tumbler
+      landmark: police_car
+      relation: near
+    grounding:
+      anchor_coord:
+      - -40.98046
+      - 116.73601
+      - 16.69391
+      target_coord:
+      - -44.37614
+      - 121.12427
+      - 16.6799
+  Pick up the umbrella in the empty parking space and bring it to the owner.:
+    camera_id: rig_2_b
+    interpretation:
+      target_type: umbrella
+      landmark: police_car
+      relation: near
+    grounding:
+      anchor_coord:
+      - -28.98046
+      - 128.73601
+      - 16.69391
+      target_coord:
+      - -42.89928
+      - 120.22615
+      - 16.7077
+  Pick up the umbrella beside the vending machine and bring it to the owner.:
+    camera_id: rig_2_c
+    interpretation:
+      target_type: umbrella
+      landmark: vending_machine
+      relation: near
+    grounding:
+      anchor_coord:
+      - -50.80626
+      - 147.53058
+      - 16.2
+      target_coord:
+      - -61.04501
+      - 136.08813
+      - 16.27506
+  Pick up the tumbler on the road next to the taxi and bring it to the owner.:
+    camera_id: rig_3_c
+    interpretation:
+      target_type: cola_can
+      landmark: taxi
+      relation: near
+    grounding:
+      anchor_coord:
+      - -83.61583
+      - 103.44018
+      - 15.45533
+      target_coord:
+      - -85.89221
+      - 108.42257
+      - 15.52783
+  Pick up the umbrella on the road next to the taxi and bring it to the owner.:
+    camera_id: rig_3_c
+    interpretation:
+      target_type: cola_can
+      landmark: taxi
+      relation: near
+    grounding:
+      anchor_coord:
+      - -83.61583
+      - 103.44018
+      - 15.45533
+      target_coord:
+      - -85.60261
+      - 108.66516
+      - 15.53515
+  Pick up the pencil case near the picnic table and bring it to the owner.:
+    camera_id: rig_3_b
+    interpretation:
+      target_type: pencilcase
+      landmark: picnic_table
+      relation: near
+    grounding:
+      anchor_coord:
+      - -80.72785
+      - 97.24997
+      - 15.65287
+      target_coord:
+      - -77.25906
+      - 97.1154
+      - 15.86412

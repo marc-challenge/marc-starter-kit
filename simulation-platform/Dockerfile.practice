@@ -1,0 +1,56 @@
+# Copyright (c) 2026, IoT Convergence & Open Sharing System (IoTCOSS)
+#
+# MARC 2026 - Dockerfile.practice : participant unified image
+# ---------------------------------------------------------------------------
+# ONE image participants run on their own PC that serves all three starter-kit tools; the tool
+# is chosen at run time by the compose `command` (see docker-compose.yml profiles):
+#   - simulation platform (practice)  -> runtime.py            (default CMD, profile: platform)
+#   - dataset generator               -> trainer.py            (profile: dataset-gen)
+#   - manipulation trainer            -> manipulation_trainer.py(profile: manip-trainer)
+#
+# The simulation content (simulation_app/scenarios/assets) is not stored in the git repo; it is
+# brought in via COPY --from from the content image -> the participant repo stays light.
+#
+# The content image contains no IsaacSim, so it can be published publicly. It is provided by the
+# organizers on the public registry (GHCR) and pulled automatically on COPY --from (BuildKit uses
+# a local image if the same tag already exists). Participants ship only the public practice
+# scenarios (chungmu/demo); the scenario used for actual scoring is not made public.
+#
+# Build context = irrelevant (no local COPY).  Result image: marc-platform:practice
+#   docker build -f simulation-platform/Dockerfile.practice \
+#     --build-arg CONTENT_IMAGE=ghcr.io/marc-challenge/marc-platform-content:2026 \
+#     -t marc-platform:practice .
+# ---------------------------------------------------------------------------
+ARG CONTENT_IMAGE=ghcr.io/marc-challenge/marc-platform-content:2026
+
+# Alias the content image (no IsaacSim, full /metacom2026 content) as a named stage.
+# (The COPY --from=<stage> form is what BuildKit and linters resolve reliably.)
+FROM ${CONTENT_IMAGE} AS content
+
+FROM marc-base:ros2-isaacsim-5.1
+
+COPY --from=content /metacom2026 /metacom2026
+
+# The participant image does not include the separate web console (removed below). trainer.py /
+# manipulation_trainer.py are KEPT (they are the dataset-gen / manip-trainer tools). Harmless if absent.
+RUN rm -rf /metacom2026/simulation_app/marc2026/runtime/admin
+
+RUN mkdir -p /metacom2026/results /metacom2026/trainer_output
+
+WORKDIR /metacom2026
+
+# Platform runtime dependencies - installed into IsaacSim's bundled Python (numpy/yaml included by default).
+# Training stacks like torch/stable-baselines3 are trainer-only -> not installed in the platform image.
+RUN /isaac-sim/python.sh -m pip install --no-cache-dir packaging netifaces pyyaml pillow
+
+# Public practice scenarios shipped = marc2026_chungmu + marc2026_demo (PUBLIC_SCENARIOS.txt allowlist).
+# Default = marc2026_chungmu (participant full set: includes answers -> self-scoring possible).
+# Switch at run time with ENV_MARC_SCENARIO (e.g. marc2026_demo) - see docker-compose.yml / .env.example.
+ENV ENV_MARC_SCENARIO=marc2026_chungmu
+
+EXPOSE 8150
+
+# Default entry = simulation platform (runtime.py). compose overrides `command` for the other tools:
+#   dataset-gen -> trainer.py, manip-trainer -> manipulation_trainer.py.
+ENTRYPOINT ["/isaac-sim/python.sh"]
+CMD ["/metacom2026/simulation_app/marc2026/runtime.py"]
