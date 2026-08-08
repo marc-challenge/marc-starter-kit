@@ -45,7 +45,7 @@ from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
 
 from std_msgs.msg import String, Bool
-from sensor_msgs.msg import Image, CameraInfo, Imu, LaserScan, JointState
+from sensor_msgs.msg import Image, CameraInfo, Imu, PointCloud2, JointState
 from geometry_msgs.msg import Twist, PoseStamped
 from nav_msgs.msg import Odometry, OccupancyGrid
 
@@ -620,9 +620,14 @@ class MARCClient:
         return self._get_robot("imu")
 
     def get_lidar(self):
-        """2D lidar scan (sensor_msgs/LaserScan) or None."""
-        self._ensure_robot_sub("lidar/scan", LaserScan, P.QOS_IMAGE)
-        return self._get_robot("lidar/scan")
+        """Latest lidar sweep (sensor_msgs/PointCloud2) or None.
+
+        The robot carries a 3D lidar (Velodyne VLP-16), so the sweep is published as a
+        point cloud - a flat LaserScan is not available for it. Points are in the
+        ``Base_LiDAR`` frame. Returns None until the first message arrives.
+        """
+        self._ensure_robot_sub("lidar/points", PointCloud2, P.QOS_IMAGE)
+        return self._get_robot("lidar/points")
 
     def get_arm_state(self):
         """Robot-arm joint state (sensor_msgs/JointState) or None."""

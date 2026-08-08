@@ -75,7 +75,10 @@ services:
       MARC_ARM_DEBUG: "${MARC_ARM_DEBUG:-0}"
     # The participant image has no separate web console, and network_mode: host exposes any port
     # directly, so no ports: mapping is needed.
+    # Boot wrapper: applies the asset patches under ./patches, then execs the entry below.
+    command: ["/marc-patches/boot.py", "/metacom2026/simulation_app/marc2026/runtime.py"]
     volumes:
+      - ./patches:/marc-patches:ro
       - ../results:/metacom2026/results:rw
       # Problem-selection file (assembled from problems.yaml.example). Edit on the host; read-only in the container.
       - ../problems.yaml:/metacom2026/problems.yaml:ro
@@ -100,8 +103,10 @@ services:
       args:
         CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026}"
     image: marc-platform:practice
-    command: ["/metacom2026/simulation_app/marc2026/trainer.py"]   # dataset generator entry
+    # Boot wrapper (same asset patches as the platform), then the dataset generator entry.
+    command: ["/marc-patches/boot.py", "/metacom2026/simulation_app/marc2026/trainer.py"]
     volumes:
+      - ./patches:/marc-patches:ro
       - ../trainer_output:/metacom2026/trainer_output:rw
       - ../.runtime-data/cache/kit:/isaac-sim/kit/cache:rw
       - ../.runtime-data/cache/ov:/root/.cache/ov:rw
@@ -122,8 +127,10 @@ services:
       args:
         CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026}"
     image: marc-platform:practice
-    command: ["/metacom2026/simulation_app/marc2026/manipulation_trainer.py"]
+    # Boot wrapper (same asset patches as the platform), then the manipulation trainer entry.
+    command: ["/marc-patches/boot.py", "/metacom2026/simulation_app/marc2026/manipulation_trainer.py"]
     volumes:
+      - ./patches:/marc-patches:ro
       - ../trainer_output:/metacom2026/trainer_output:rw
       - ../.runtime-data/cache/kit:/isaac-sim/kit/cache:rw
       - ../.runtime-data/cache/ov:/root/.cache/ov:rw
