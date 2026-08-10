@@ -18,10 +18,10 @@
 #
 # Build context = irrelevant (no local COPY).  Result image: marc-platform:practice
 #   docker build -f simulation-platform/Dockerfile.practice \
-#     --build-arg CONTENT_IMAGE=ghcr.io/marc-challenge/marc-platform-content:2026 \
+#     --build-arg CONTENT_IMAGE=ghcr.io/marc-challenge/marc-platform-content:2026.R01 \
 #     -t marc-platform:practice .
 # ---------------------------------------------------------------------------
-ARG CONTENT_IMAGE=ghcr.io/marc-challenge/marc-platform-content:2026
+ARG CONTENT_IMAGE=ghcr.io/marc-challenge/marc-platform-content:2026.R01
 
 # Alias the content image (no IsaacSim, full /metacom2026 content) as a named stage.
 # (The COPY --from=<stage> form is what BuildKit and linters resolve reliably.)

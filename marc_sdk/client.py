@@ -44,7 +44,7 @@ import rclpy
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
 
-from std_msgs.msg import String, Bool
+from std_msgs.msg import String, Bool, Float32
 from sensor_msgs.msg import Image, CameraInfo, Imu, PointCloud2, JointState
 from geometry_msgs.msg import Twist, PoseStamped
 from nav_msgs.msg import Odometry, OccupancyGrid
@@ -160,6 +160,7 @@ class MARCClient:
         self._lock = threading.Lock()
         self._cctv_image = {}     # camera_id -> Image
         self._cctv_info = {}      # camera_id -> CameraInfo
+        self._cctv_ground_height = {}   # camera_id -> float (ground-plane world z, m)
         self._cctv_subs = set()   # already-subscribed camera_id
         self._robot_msgs = {}     # suffix -> latest message
         self._robot_subs = set()  # robot suffix already lazily subscribed
@@ -464,6 +465,9 @@ class MARCClient:
                     self._node.create_subscription(
                         CameraInfo, self.topics.env_cctv_info(cid),
                         lambda m, c=cid: self._cache_cctv_info(c, m), P.QOS_IMAGE)
+                    self._node.create_subscription(
+                        Float32, self.topics.env_cctv_ground_height(cid),
+                        lambda m, c=cid: self._cache_cctv_ground_height(c, m), P.QOS_TRANSIENT)
                     self._log("[SUB] CCTV %s", cid)
 
     def _cache_cctv_image(self, cid, msg):
@@ -473,6 +477,10 @@ class MARCClient:
     def _cache_cctv_info(self, cid, msg):
         with self._lock:
             self._cctv_info[cid] = msg
+
+    def _cache_cctv_ground_height(self, cid, msg):
+        with self._lock:
+            self._cctv_ground_height[cid] = float(msg.data)
 
     def _on_world_pose(self, msg: PoseStamped):
         p, q = msg.pose.position, msg.pose.orientation
@@ -592,6 +600,15 @@ class MARCClient:
         """CCTV camera parameters (sensor_msgs/CameraInfo) or None."""
         with self._lock:
             return self._cctv_info.get(camera_id)
+
+    def get_cctv_ground_height(self, camera_id: str):
+        """Ground-plane height (world z, meters) this CCTV looks down on, or None.
+
+        Use as the plane (z = ground_height) when back-projecting image pixels to
+        world coordinates. Latched, so it is available as soon as the camera is
+        discovered. Per-camera (roads and grass differ by a few cm)."""
+        with self._lock:
+            return self._cctv_ground_height.get(camera_id)
 
     def get_robot_image(self, which: str = "base_left"):
         """Robot stereo RGB (sensor_msgs/Image). which in base_left/right, gripper_left/right."""

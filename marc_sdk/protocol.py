@@ -135,6 +135,9 @@ class Topics:
     def env_cctv_info(self, camera_id: str) -> str:
         return f"/{self.ns}/env/cctv/{camera_id}/info"
 
+    def env_cctv_ground_height(self, camera_id: str) -> str:
+        return f"/{self.ns}/env/cctv/{camera_id}/ground_height"
+
     @property
     def env_map_occupancy(self) -> str:
         return f"/{self.ns}/env/map/occupancy"
