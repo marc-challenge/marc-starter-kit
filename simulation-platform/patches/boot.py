@@ -19,7 +19,7 @@ import sys
 PYTHON_SH = "/isaac-sim/python.sh"
 DEFAULT_TARGET = "/metacom2026/simulation_app/marc2026/runtime.py"
 PATCH_DIR = os.path.dirname(os.path.abspath(__file__))
-PATCHES = ["patch_lidar_frameid.py"]
+PATCHES = ["patch_lidar_frameid.py", "patch_object_xformops.py", "patch_object_rotation.py"]
 
 
 def _patch_env():
