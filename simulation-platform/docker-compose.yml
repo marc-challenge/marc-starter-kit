@@ -62,7 +62,7 @@ services:
       context: ..                      # starter-kit repo root = build context
       dockerfile: simulation-platform/Dockerfile.practice
       args:
-        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R01}"
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R02}"
     image: marc-platform:practice      # local build output (do not redistribute)
     environment:
       <<: *marc-env
@@ -104,7 +104,7 @@ services:
       # Same unified image as the platform.
       dockerfile: simulation-platform/Dockerfile.practice
       args:
-        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R01}"
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R02}"
     image: marc-platform:practice
     # Boot wrapper (same asset patches as the platform), then the dataset generator entry.
     command: ["/marc-patches/boot.py", "/metacom2026/simulation_app/marc2026/trainer.py"]
@@ -128,7 +128,7 @@ services:
       context: ..
       dockerfile: simulation-platform/Dockerfile.practice
       args:
-        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R01}"
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R02}"
     image: marc-platform:practice
     # Boot wrapper (same asset patches as the platform), then the manipulation trainer entry.
     command: ["/marc-patches/boot.py", "/metacom2026/simulation_app/marc2026/manipulation_trainer.py"]

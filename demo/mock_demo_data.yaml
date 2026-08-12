@@ -1,7 +1,7 @@
 _generated_from: marc2026_demo.yaml
 _note: Demo-only data extracted from a scenario yaml (GT + random wrong axes, seed
-  below). Real participants do not have the scenario; the demo mock agents read
-  this instead.
+  below). Real participants do not have the scenario; the demo mock agents read this
+  instead.
 _seed: 2026
 obstacles:
 - x: -38.60969
@@ -377,9 +377,9 @@ stage1_answers:
       relation: near
     grounding:
       anchor_coord:
-      - -74.20287
-      - 122.58636
-      - 15.34397
+      - -64.58481
+      - 108.19682
+      - 15.70586
       target_coord:
       - -77.6659
       - 96.58376
@@ -542,9 +542,9 @@ stage1_answers:
       relation: near
     grounding:
       anchor_coord:
-      - -86.20287
-      - 110.58636
-      - 15.34397
+      - -76.58481
+      - 96.19682
+      - 15.70586
       target_coord:
       - -65.6659
       - 108.58376
@@ -587,9 +587,9 @@ stage1_answers:
       situation: accident
     grounding:
       anchor_coord:
-      - -74.20287
-      - 122.58636
-      - 15.34397
+      - -26.18341
+      - 146.45073
+      - 16.8
       target_coord:
       - -37.93124
       - 134.61274
@@ -662,9 +662,9 @@ stage1_answers:
       situation: accident
     grounding:
       anchor_coord:
-      - -78.86305
-      - 101.85303
-      - 16.11596
+      - -48.56376
+      - 128.79317
+      - 17.02055
       target_coord:
       - -49.27203
       - 125.6504
@@ -692,9 +692,9 @@ stage1_answers:
       situation: emergency
     grounding:
       anchor_coord:
-      - -86.20287
-      - 110.58636
-      - 15.34397
+      - -53.99992
+      - 111.80938
+      - 16.85219
       target_coord:
       - -55.23807
       - 111.34714
@@ -708,9 +708,9 @@ stage1_answers:
       situation: emergency
     grounding:
       anchor_coord:
-      - -86.20287
-      - 110.58636
-      - 15.34397
+      - -53.99992
+      - 111.80938
+      - 16.85219
       target_coord:
       - -43.23807
       - 123.34714
@@ -723,9 +723,9 @@ stage1_answers:
       situation: accident
     grounding:
       anchor_coord:
-      - -66.86305
-      - 113.85303
-      - 16.11596
+      - -36.56376
+      - 140.79317
+      - 17.02055
       target_coord:
       - -49.27203
       - 125.6504
@@ -753,9 +753,9 @@ stage1_answers:
       situation: abnormal
     grounding:
       anchor_coord:
-      - -74.20287
-      - 122.58636
-      - 15.34397
+      - -26.18341
+      - 146.45073
+      - 16.8
       target_coord:
       - -37.93124
       - 134.61274
@@ -783,9 +783,9 @@ stage1_answers:
       situation: accident
     grounding:
       anchor_coord:
-      - -78.86305
-      - 101.85303
-      - 16.11596
+      - -48.56376
+      - 128.79317
+      - 17.02055
       target_coord:
       - -49.27203
       - 125.6504
