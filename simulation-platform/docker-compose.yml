@@ -62,7 +62,7 @@ services:
       context: ..                      # starter-kit repo root = build context
       dockerfile: simulation-platform/Dockerfile.practice
       args:
-        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R02}"
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R03}"
     image: marc-platform:practice      # local build output (do not redistribute)
     environment:
       <<: *marc-env
@@ -104,8 +104,13 @@ services:
       # Same unified image as the platform.
       dockerfile: simulation-platform/Dockerfile.practice
       args:
-        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R02}"
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R03}"
     image: marc-platform:practice
+    environment:
+      <<: *marc-env
+      # N>0 generates N scenes without the GUI and exits (batch dataset generation).
+      # 0 (default) keeps the interactive panel: New Scene / New Camera.
+      TRAINER_AUTO_SCENES: "${TRAINER_AUTO_SCENES:-0}"
     # Boot wrapper (same asset patches as the platform), then the dataset generator entry.
     command: ["/marc-patches/boot.py", "/metacom2026/simulation_app/marc2026/trainer.py"]
     volumes:
@@ -118,6 +123,10 @@ services:
       - ../.runtime-data/cache/computecache:/root/.nv/ComputeCache:rw
       - ../.runtime-data/logs:/root/.nvidia-omniverse/logs:rw
       - ../.runtime-data/data:/root/.local/share/ov/data:rw
+      # GUI (HEADLESS=false, the default): the generator renders through the viewport, so without
+      # the host X display it fails to create a window and crashes. Run `xhost +local:root`.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-/root/.Xauthority}:/root/.Xauthority:rw
 
   # Manipulation trainer - same unified image, only the entry differs via command.
   #   A practice tool, so it is not part of the competition scoring runtime.
@@ -128,7 +137,7 @@ services:
       context: ..
       dockerfile: simulation-platform/Dockerfile.practice
       args:
-        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R02}"
+        CONTENT_IMAGE: "${MARC_CONTENT_IMAGE:-ghcr.io/marc-challenge/marc-platform-content:2026.R03}"
     image: marc-platform:practice
     # Boot wrapper (same asset patches as the platform), then the manipulation trainer entry.
     command: ["/marc-patches/boot.py", "/metacom2026/simulation_app/marc2026/manipulation_trainer.py"]
